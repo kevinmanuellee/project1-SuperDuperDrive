@@ -1,13 +1,12 @@
-package com.udacity.jwdnd.course1.cloudstorage.services;
+package starter.cloudstorage.src.main.java.com.udacity.jwdnd.course1.cloudstorage.services;
 
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Service;
-import com.udacity.jwdnd.course1.cloudstorage.mapper.UserMapper;
-import com.udacity.jwdnd.course1.cloudstorage.model.User;
-
+import starter.cloudstorage.src.main.java.com.udacity.jwdnd.course1.cloudstorage.mapper.UserMapper;
+import starter.cloudstorage.src.main.java.com.udacity.jwdnd.course1.cloudstorage.model.User;
 import java.util.ArrayList;
 
 @Service
