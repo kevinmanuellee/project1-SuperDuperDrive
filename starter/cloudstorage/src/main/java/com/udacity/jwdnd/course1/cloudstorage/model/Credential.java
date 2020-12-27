@@ -1,4 +1,4 @@
-package starter.cloudstorage.src.main.java.com.udacity.jwdnd.course1.cloudstorage.model;
+package com.udacity.jwdnd.course1.cloudstorage.model;
 
 public class Credential {
     private Integer credentialId;
@@ -32,11 +32,11 @@ public class Credential {
         this.username = username;
     }
 
-    public String getKey_val() {
+    public String getKey() {
         return key;
     }
 
-    public void setKey_val(String key) {
+    public void setKey(String key) {
         this.key = key;
     }
 

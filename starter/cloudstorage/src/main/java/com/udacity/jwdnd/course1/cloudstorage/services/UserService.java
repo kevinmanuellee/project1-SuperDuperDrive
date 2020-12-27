@@ -1,8 +1,8 @@
-package starter.cloudstorage.src.main.java.com.udacity.jwdnd.course1.cloudstorage.services;
+package com.udacity.jwdnd.course1.cloudstorage.services;
 
 import org.springframework.stereotype.Service;
-import starter.cloudstorage.src.main.java.com.udacity.jwdnd.course1.cloudstorage.mapper.UserMapper;
-import starter.cloudstorage.src.main.java.com.udacity.jwdnd.course1.cloudstorage.model.User;
+import com.udacity.jwdnd.course1.cloudstorage.mapper.UserMapper;
+import com.udacity.jwdnd.course1.cloudstorage.model.User;
 
 import java.security.SecureRandom;
 import java.util.Base64;
@@ -33,5 +33,11 @@ public class UserService {
 
     public User getUser(String username) {
         return userMapper.getUser(username);
+    }
+
+    public Integer getUserId(String username){
+        User user = userMapper.getUser(username);
+        Integer userId = user.getUserid();
+        return userId;
     }
 }

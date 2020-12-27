@@ -1,4 +1,4 @@
-package starter.cloudstorage.src.main.java.com.udacity.jwdnd.course1.cloudstorage.model;
+package com.udacity.jwdnd.course1.cloudstorage.model;
 
 public class Note {
     private Integer noteId;

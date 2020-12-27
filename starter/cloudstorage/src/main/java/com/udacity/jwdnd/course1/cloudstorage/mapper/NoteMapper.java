@@ -1,8 +1,8 @@
-package starter.cloudstorage.src.main.java.com.udacity.jwdnd.course1.cloudstorage.mapper;
+package com.udacity.jwdnd.course1.cloudstorage.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.*;
-import starter.cloudstorage.src.main.java.com.udacity.jwdnd.course1.cloudstorage.model.Note;
+import com.udacity.jwdnd.course1.cloudstorage.model.Note;
 import java.util.List;
 
 @Mapper
