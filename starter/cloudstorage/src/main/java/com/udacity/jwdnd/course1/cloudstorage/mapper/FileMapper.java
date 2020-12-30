@@ -9,18 +9,21 @@ public interface FileMapper {
     @Insert("INSERT INTO FILES (fileId,fileName,contentType,fileSize,userId,fileData) " +
             "VALUES (#{fileId},#{fileName},#{contentType},#{fileSize},#{userId},#{fileData});")
     @Options(useGeneratedKeys = true, keyProperty = "fileId")
-    int uploadFiles(File file);
+    int uploadFile(File file);
 
-    @Delete("DELETE FROM FILES WHERE fileId=#{fileId};")
-    Integer deleteFileById(Integer fileId);
+    @Delete("DELETE FROM FILES WHERE fileId=#{fileId} AND userId=#{userId};")
+    Integer deleteFile(Integer fileId, Integer userId);
 
-    @Select("SELECT * FROM FILES WHERE fileId=#{fileId};")
-    File downloadFileById(Integer fileId);
+    @Select("SELECT * FROM FILES WHERE fileId=#{fileId}; AND userId=#{userId};")
+    File getFile(Integer fileId, Integer userId);
 
-//    @Select("Select 1 from FILES WHERE filename=#{fileName};")
-//    Integer fileNameAvailable(String fileName);
+    @Select("SELECT CASE WHEN EXISTS (" +
+                "SELECT * FROM FILES WHERE fileName=#{fileName} AND userId=#{userId}" +
+            ") " +
+            "THEN TRUE " +
+            "ELSE FALSE END AS bool;")
+    boolean isExistingFile (String fileName, Integer userId);
 
-    @Select("SELECT * from FILES INNER JOIN USERS on FILES.userId=USERS.userId " +
-            "WHERE USERS.username=#{username};")
-    List<File> getAllFiles(String username);
+    @Select("SELECT fileName FROM FILES WHERE userId=#{userId};")
+    List<File> getAllFiles(Integer userId);
 }

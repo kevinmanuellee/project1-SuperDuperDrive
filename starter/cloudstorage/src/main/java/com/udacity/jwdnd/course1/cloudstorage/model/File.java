@@ -16,6 +16,8 @@ public class File {
         this.fileData=fileData;
     }
 
+    public File(){};
+
     public Integer getFileId() {
         return fileId;
     }
