@@ -43,7 +43,7 @@ public class FileController {
         return "result";
     }
 
-    @GetMapping("/download/{fileId}")
+    @GetMapping("/{fileId}")
     public ResponseEntity downloadFile (@PathVariable Integer fileId, Authentication authentication){
         Integer userId = userService.getUserId(authentication.getName());
         File file = fileService.getFile(fileId, userId);
@@ -54,7 +54,7 @@ public class FileController {
                 .body(file);
     }
 
-    @DeleteMapping("/delete/{fileId}")
+    @DeleteMapping("/{fileId}")
     public String deleteFile (Model model, @PathVariable Integer fileId, Authentication authentication){
         Integer userId = userService.getUserId(authentication.getName());
         Integer fileIsDeleted = fileService.deleteFile(fileId, userId);
