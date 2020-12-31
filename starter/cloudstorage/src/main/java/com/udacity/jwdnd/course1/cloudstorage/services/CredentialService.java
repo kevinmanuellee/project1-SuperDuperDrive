@@ -7,6 +7,7 @@ import com.udacity.jwdnd.course1.cloudstorage.model.Credential;
 
 import java.security.SecureRandom;
 import java.util.Base64;
+import java.util.List;
 
 @Service
 public class CredentialService {
@@ -55,7 +56,11 @@ public class CredentialService {
         return credential;
     }
 
-    public void deleteCredential(Integer credentialid) {
-        credentialMapper.deleteCredential(credentialid);
+    public Integer deleteCredential(Integer credentialid, Integer userId) {
+        return credentialMapper.deleteCredential(credentialid, userId);
+    }
+
+    public List<Credential> getAllCredentials(Integer userId){
+        return credentialMapper.getAllCredentials(userId);
     }
 }
