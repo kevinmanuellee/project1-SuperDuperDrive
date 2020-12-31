@@ -10,20 +10,19 @@ public interface NoteMapper {
     @Insert("INSERT INTO NOTES (noteTitle, noteDescription, userId) " +
             "VALUES (#{noteTitle},#{noteDescription},#{userId});")
     @Options(useGeneratedKeys = true, keyProperty = "noteId")
-    int addNote(Note note);
+    Integer addNote(Note note);
 
     @Update("UPDATE NOTES SET noteTitle=#{noteTitle},noteDescription=#{noteDescription}, userId=#{userId} " +
             "WHERE noteId=#{noteId};")
-    int updateNote(Note note);
+    Integer updateNote(Note note);
 
-    @Delete("DELETE FROM NOTES WHERE noteId=#{noteId};")
-    Integer deleteNote(Integer noteId);
+    @Delete("DELETE FROM NOTES WHERE noteId=#{noteId} AND userId=#{userId};")
+    Integer deleteNote(Integer noteId, Integer userId);
 
     @Select("SELECT noteId FROM NOTES INNER JOIN USERS on NOTES.userId=USERS.userId " +
             "WHERE USERS.username=#{username};")
     Integer getNoteId(String username);
 
-    @Select("SELECT * FROM NOTES INNER JOIN USERS on NOTES.userId=USERS.userId " +
-            "WHERE USERS.username=#{username};")
-    List<Note> getAllNotes(String username);
+    @Select("SELECT * FROM NOTES WHERE userId=#{userId};")
+    List<Note> getAllNotes(Integer userId);
 }
