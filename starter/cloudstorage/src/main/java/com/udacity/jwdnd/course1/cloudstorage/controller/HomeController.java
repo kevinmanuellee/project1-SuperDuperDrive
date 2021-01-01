@@ -1,5 +1,8 @@
 package com.udacity.jwdnd.course1.cloudstorage.controller;
 
+import com.udacity.jwdnd.course1.cloudstorage.model.Credential;
+import com.udacity.jwdnd.course1.cloudstorage.model.File;
+import com.udacity.jwdnd.course1.cloudstorage.model.Note;
 import com.udacity.jwdnd.course1.cloudstorage.services.CredentialService;
 import com.udacity.jwdnd.course1.cloudstorage.services.FileService;
 import com.udacity.jwdnd.course1.cloudstorage.services.NoteService;
@@ -26,9 +29,10 @@ public class HomeController {
     }
 
     @GetMapping
-    public String homeView(Model model, Authentication authentication){
+    public String homeView(Model model, Authentication authentication, Note note, Credential credential, File file){
         String username = authentication.getName();
         Integer userId = userService.getUserId(username);
+
         model.addAttribute("fileList", this.fileService.getAllFiles(userId));
         model.addAttribute("noteList", this.noteService.getAllNotes(userId));
         model.addAttribute("credentialList", this.credentialService.getAllCredentials(userId));

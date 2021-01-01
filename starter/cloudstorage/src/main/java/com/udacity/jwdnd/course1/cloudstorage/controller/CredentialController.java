@@ -29,8 +29,10 @@ public class CredentialController {
         credential.setUserId(userId);
         try{
             credentialService.insertOrUpdateCredential(credential);
+            model.addAttribute("isSuccessful", true);
             model.addAttribute("successMessage",  "credential has been successfully inserted!");
         } catch (Exception e){
+            model.addAttribute("hasAnError", true);
             model.addAttribute("errorMessage", "Error in adding credential");
             e.printStackTrace();
         }
@@ -43,8 +45,10 @@ public class CredentialController {
         Integer credentialIsDeleted = credentialService.deleteCredential(credentialId, userId);
 
         if (credentialIsDeleted != null){
+            model.addAttribute("isSuccessful", true);
             model.addAttribute("successMessage", "credential has been successfully deleted!");
         } else {
+            model.addAttribute("hasAnError", true);
             model.addAttribute("errorMessage", "credential deletion failed!");
         }
         return "result";

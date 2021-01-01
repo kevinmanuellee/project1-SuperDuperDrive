@@ -29,8 +29,10 @@ public class NoteController {
         note.setUserId(userId);
         try{
             noteService.addOrEditNote(note);
+            model.addAttribute("isSuccessful", true);
             model.addAttribute("successMessage", note.getNoteTitle() + " has been successfully uploaded!");
         } catch (Exception e){
+            model.addAttribute("hasAnError", true);
             model.addAttribute("errorMessage", "Error in adding note");
             e.printStackTrace();
         }
@@ -44,8 +46,10 @@ public class NoteController {
         Integer noteIsDeleted = noteService.deleteNote(noteId, userId);
 
         if (noteIsDeleted != null){
+            model.addAttribute("isSuccessful", true);
             model.addAttribute("successMessage", "note has been successfully deleted!");
         } else {
+            model.addAttribute("hasAnError", true);
             model.addAttribute("errorMessage", "note deletion failed!");
         }
         return "result";

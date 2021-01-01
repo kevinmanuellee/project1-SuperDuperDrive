@@ -27,23 +27,26 @@ public class FileController {
     }
 
     @PostMapping()
-    public String uploadFile (Model model, @RequestParam("file")MultipartFile file, Authentication authentication) {
+    public String uploadFile (Model model, @RequestParam("fileUpload")MultipartFile file, Authentication authentication) {
         Integer userId = userService.getUserId(authentication.getName());
         try{
             if(!fileService.isDuplicate(file, userId)){
                 fileService.uploadFile(file, userId);
+                model.addAttribute("isSuccessful", true);
                 model.addAttribute("successMessage", file.getName() + " has been successfully uploaded!");
             } else {
+                model.addAttribute("hasAnError", true);
                 model.addAttribute("errorMessage", "File with " + file.getName() + " existed!");
             }
         } catch (IOException e){
+            model.addAttribute("hasAnError", true);
             model.addAttribute("errorMessage", "Error in uploading file!");
             e.printStackTrace();
         }
         return "result";
     }
 
-    @GetMapping("/{fileId}")
+    @GetMapping("download/{fileId}")
     public ResponseEntity downloadFile (@PathVariable Integer fileId, Authentication authentication){
         Integer userId = userService.getUserId(authentication.getName());
         File file = fileService.getFile(fileId, userId);
@@ -54,7 +57,7 @@ public class FileController {
                 .body(file);
     }
 
-    @DeleteMapping("/{fileId}")
+    @DeleteMapping("delete/{fileId}")
     public String deleteFile (Model model, @PathVariable Integer fileId, Authentication authentication){
         Integer userId = userService.getUserId(authentication.getName());
         Integer fileIsDeleted = fileService.deleteFile(fileId, userId);
@@ -62,6 +65,7 @@ public class FileController {
         if (fileIsDeleted != null){
             model.addAttribute("successMessage", "file has been successfully deleted!");
         } else {
+            model.addAttribute("hasAnError", true);
             model.addAttribute("errorMessage", "file deletion failed!");
         }
         return "result";
