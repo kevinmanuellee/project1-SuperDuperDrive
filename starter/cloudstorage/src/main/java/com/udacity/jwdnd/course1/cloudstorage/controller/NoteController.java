@@ -18,8 +18,9 @@ public class NoteController {
     private NoteService noteService;
     private UserService userService;
 
-    public NoteController(NoteService noteService) {
+    public NoteController(NoteService noteService, UserService userService) {
         this.noteService = noteService;
+        this.userService = userService;
     }
 
     @PostMapping

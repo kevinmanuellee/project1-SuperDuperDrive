@@ -43,7 +43,7 @@ class CloudStorageApplicationTests {
 	@Order(1)
 	public void getSignupPage(){
 		driver.get("http://localhost:" + this.port + "/signup");
-		Assertions.assertEquals("signup", driver.getTitle());
+		Assertions.assertEquals("Sign Up", driver.getTitle());
 		SignupPage signupPage = new SignupPage(driver);
 		signupPage.createUser("kevin", "manuel", username, password);
 	}
