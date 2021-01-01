@@ -24,6 +24,6 @@ public interface FileMapper {
             "ELSE FALSE END AS bool;")
     boolean isExistingFile (String fileName, Integer userId);
 
-    @Select("SELECT fileName FROM FILES WHERE userId=#{userId};")
+    @Select("SELECT * FROM FILES WHERE userId=#{userId};")
     List<File> getAllFiles(Integer userId);
 }

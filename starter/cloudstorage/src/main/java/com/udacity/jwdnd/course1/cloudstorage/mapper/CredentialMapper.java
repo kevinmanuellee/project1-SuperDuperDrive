@@ -13,7 +13,7 @@ public interface CredentialMapper {
     @Update("UPDATE CREDENTIALS SET url=#{url},userName=#{userName}, key=#{key}, password=#{password} where credentialId=#{credentialId};")
     Integer updateCredential(Credential credential);
 
-    @Delete("Delete from CREDENTIALS where credentialId=#{credentialId};")
+    @Delete("DELETE FROM CREDENTIALS where credentialId=#{credentialId};")
     Integer deleteCredential(Integer credentialId, Integer userId);
 
     @Select("SELECT * FROM CREDENTIALS WHERE userId=#{userId};")
