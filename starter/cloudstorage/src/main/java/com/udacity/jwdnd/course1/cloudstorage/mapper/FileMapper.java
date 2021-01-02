@@ -14,7 +14,7 @@ public interface FileMapper {
     @Delete("DELETE FROM FILES WHERE fileId=#{fileId} AND userId=#{userId};")
     Integer deleteFile(Integer fileId, Integer userId);
 
-    @Select("SELECT * FROM FILES WHERE fileId=#{fileId}; AND userId=#{userId};")
+    @Select("SELECT * FROM FILES WHERE fileId=#{fileId} AND userId=#{userId};")
     File getFile(Integer fileId, Integer userId);
 
     @Select("SELECT CASE WHEN EXISTS (" +
