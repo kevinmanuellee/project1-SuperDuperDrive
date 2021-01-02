@@ -57,12 +57,15 @@ public class FileController {
                 .body(file);
     }
 
-    @DeleteMapping("delete/{fileId}")
+//    @DeleteMapping("delete/{fileId}")
+    @GetMapping("delete/{fileId}")
     public String deleteFile (Model model, @PathVariable Integer fileId, Authentication authentication){
         Integer userId = userService.getUserId(authentication.getName());
         Integer fileIsDeleted = fileService.deleteFile(fileId, userId);
+        System.out.println("deleted fileId is " + fileIsDeleted);
 
         if (fileIsDeleted != null){
+            model.addAttribute("isSuccessful", true);
             model.addAttribute("successMessage", "file has been successfully deleted!");
         } else {
             model.addAttribute("hasAnError", true);
