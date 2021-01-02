@@ -54,7 +54,7 @@ public class FileController {
         return ResponseEntity.ok()
                 .contentType(MediaType.parseMediaType(file.getContentType()))
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFileName() + "\"")
-                .body(file);
+                .body(file.getFileData());
     }
 
 //    @DeleteMapping("delete/{fileId}")
@@ -62,7 +62,6 @@ public class FileController {
     public String deleteFile (Model model, @PathVariable Integer fileId, Authentication authentication){
         Integer userId = userService.getUserId(authentication.getName());
         Integer fileIsDeleted = fileService.deleteFile(fileId, userId);
-        System.out.println("deleted fileId is " + fileIsDeleted);
 
         if (fileIsDeleted != null){
             model.addAttribute("isSuccessful", true);

@@ -26,7 +26,7 @@ public class FileService {
 
     public void uploadFile(MultipartFile multipartFile, Integer userId) throws IOException {
         File file = new File();
-        file.setFileName(multipartFile.getName());
+        file.setFileName(multipartFile.getOriginalFilename());
         file.setFileSize(multipartFile.getSize());
         file.setFileData(multipartFile.getBytes());
         file.setContentType(multipartFile.getContentType());
