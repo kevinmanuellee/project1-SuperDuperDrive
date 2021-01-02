@@ -19,7 +19,7 @@ public class NoteService {
     }
 
     public Integer addOrEditNote(Note note){
-        if (note.getNoteId() != null){
+        if (note.getNoteId() == null){
             return this.noteMapper.addNote(note);
         }
         return this.noteMapper.updateNote(note);
