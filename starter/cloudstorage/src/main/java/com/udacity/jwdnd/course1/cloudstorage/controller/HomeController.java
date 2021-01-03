@@ -36,6 +36,7 @@ public class HomeController {
         model.addAttribute("fileList", this.fileService.getAllFiles(userId));
         model.addAttribute("noteList", this.noteService.getAllNotes(userId));
         model.addAttribute("credentialList", this.credentialService.getAllCredentials(userId));
+        model.addAttribute("credentialService", this.credentialService);
         return "home";
     }
 

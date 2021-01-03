@@ -12,7 +12,7 @@ public class Credential {
         return credentialId;
     }
 
-    public void setCredentialId(int credentialId) {
+    public void setCredentialId(Integer credentialId) {
         this.credentialId = credentialId;
     }
 
