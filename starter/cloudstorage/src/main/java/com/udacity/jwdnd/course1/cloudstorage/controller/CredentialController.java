@@ -3,10 +3,7 @@ package com.udacity.jwdnd.course1.cloudstorage.controller;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import com.udacity.jwdnd.course1.cloudstorage.model.Credential;
 import com.udacity.jwdnd.course1.cloudstorage.services.CredentialService;
 import com.udacity.jwdnd.course1.cloudstorage.services.UserService;
@@ -39,7 +36,7 @@ public class CredentialController {
         return "result";
     }
 
-    @DeleteMapping("/delete/{credentialId}")
+    @GetMapping("/delete/{credentialId}")
     public String deleteNote (Model model, @PathVariable Integer credentialId, Authentication authentication){
         Integer userId = userService.getUserId(authentication.getName());
         Integer credentialIsDeleted = credentialService.deleteCredential(credentialId, userId);

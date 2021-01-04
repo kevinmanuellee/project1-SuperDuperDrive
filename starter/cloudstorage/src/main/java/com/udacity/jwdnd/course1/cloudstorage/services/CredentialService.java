@@ -21,7 +21,6 @@ public class CredentialService {
     }
 
     public void insertOrUpdateCredential (Credential credential) {
-        System.out.println("Insert Credential Method");
         String password = credential.getPassword(); //get password from credential form
         // <start> encrypt the password
         SecureRandom random = new SecureRandom();
@@ -34,8 +33,10 @@ public class CredentialService {
         credential.setKey(encodedKey);
 
         if (credential.getCredentialId() == null) {
+            System.out.println("Insert Credential Method");
             credentialMapper.insertCredential(credential);//userId will be provided in the controller, credentialId is auto-generated
         } else {
+            System.out.println("Update Credential Method");
             credentialMapper.updateCredential(credential);
         }
 
