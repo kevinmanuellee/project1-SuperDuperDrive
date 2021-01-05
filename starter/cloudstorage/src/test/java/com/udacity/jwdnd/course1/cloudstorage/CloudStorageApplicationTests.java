@@ -104,6 +104,7 @@ class CloudStorageApplicationTests {
 		Assertions.assertEquals("http://localhost:" + port + "/note", driver.getCurrentUrl());
 		Thread.sleep(2000);
 		wait.until(ExpectedConditions.elementToBeClickable( By.id("successResult-to-home-link") )).click();
+		Thread.sleep(1000);
 		Assertions.assertEquals("http://localhost:" + port + "/home", driver.getCurrentUrl());
 
 		//check if the inputted note is consistent
@@ -126,6 +127,7 @@ class CloudStorageApplicationTests {
 		Assertions.assertEquals("http://localhost:" + port + "/note", driver.getCurrentUrl());
 		Thread.sleep(2000);
 		wait.until(ExpectedConditions.elementToBeClickable( By.id("successResult-to-home-link") )).click();
+		Thread.sleep(1000);
 		Assertions.assertEquals("http://localhost:" + port + "/home", driver.getCurrentUrl());
 
 		//delete note
@@ -136,6 +138,7 @@ class CloudStorageApplicationTests {
 		//check result page to home page flow
 		Thread.sleep(2000);
 		wait.until(ExpectedConditions.elementToBeClickable( By.id("successResult-to-home-link") )).click();
+		Thread.sleep(1000);
 		Assertions.assertEquals("http://localhost:" + port + "/home", driver.getCurrentUrl());
 
 		//check if note is deleted
@@ -181,6 +184,7 @@ class CloudStorageApplicationTests {
 		Assertions.assertEquals("http://localhost:" + port + "/credential", driver.getCurrentUrl());
 		Thread.sleep(1000);
 		wait.until(ExpectedConditions.elementToBeClickable( By.id("successResult-to-home-link") )).click();
+		Thread.sleep(1000);
 		Assertions.assertEquals("http://localhost:" + port + "/home", driver.getCurrentUrl());
 
 		//check if the inputted note is consistent
@@ -207,6 +211,7 @@ class CloudStorageApplicationTests {
 		Assertions.assertEquals("http://localhost:" + port + "/credential", driver.getCurrentUrl());
 		Thread.sleep(1000);
 		wait.until(ExpectedConditions.elementToBeClickable( By.id("successResult-to-home-link") )).click();
+		Thread.sleep(1000);
 		Assertions.assertEquals("http://localhost:" + port + "/home", driver.getCurrentUrl());
 
 		//delete credential
@@ -217,6 +222,7 @@ class CloudStorageApplicationTests {
 		//check result page to home page flow
 		Thread.sleep(1000);
 		wait.until(ExpectedConditions.elementToBeClickable( By.id("successResult-to-home-link") )).click();
+		Thread.sleep(1000);
 		Assertions.assertEquals("http://localhost:" + port + "/home", driver.getCurrentUrl());
 
 		//check if credential is deleted
