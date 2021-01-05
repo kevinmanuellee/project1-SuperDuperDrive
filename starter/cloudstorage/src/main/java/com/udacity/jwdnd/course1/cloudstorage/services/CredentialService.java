@@ -33,20 +33,10 @@ public class CredentialService {
         credential.setKey(encodedKey);
 
         if (credential.getCredentialId() == null) {
-            System.out.println("Insert Credential Method");
             credentialMapper.insertCredential(credential);//userId will be provided in the controller, credentialId is auto-generated
         } else {
-            System.out.println("Update Credential Method");
             credentialMapper.updateCredential(credential);
         }
-
-        //for debugging
-        System.out.println("Credential ID : " + credential.getCredentialId());
-        System.out.println("User ID : " + credential.getUserId());
-        System.out.println("Url : " + credential.getUrl());
-        System.out.println("Username : " + credential.getUsername());
-        System.out.println("Password : " + credential.getPassword());
-        System.out.println("Key : " + credential.getKey());
     }
 
     public Credential getCredential(Credential credential){
