@@ -164,70 +164,70 @@ class CloudStorageApplicationTests {
 		loginPage.login(username,password);
 
 		//Wait Driver
-		WebDriverWait wait = new WebDriverWait(driver, 5);
+		WebDriverWait waitDriver = new WebDriverWait(driver, 5);
 		driver.get("http://localhost:" + this.port + "/home");
 		HomePage homePage = new HomePage(driver);
 		Assertions.assertEquals("Home", driver.getTitle());
 
 		//open credential tab
 		WebElement credentialTab = homePage.getCredentialsTab();
-		wait.until(ExpectedConditions.elementToBeClickable(credentialTab)).click();
+		waitDriver.until(ExpectedConditions.elementToBeClickable(credentialTab)).click();
 
 		//add new credential
-		wait.until(ExpectedConditions.elementToBeClickable( By.id("addCredentialButton") )).click();
-		wait.until(ExpectedConditions.elementToBeClickable( By.id("credential-url") )).sendKeys(urlC);
-		wait.until(ExpectedConditions.elementToBeClickable( By.id("credential-username") )).sendKeys(usernameC);
-		wait.until(ExpectedConditions.elementToBeClickable( By.id("credential-password") )).sendKeys(passwordC);
-		wait.until(ExpectedConditions.elementToBeClickable( By.id("saveCredentialChanges") )).click();
+		waitDriver.until(ExpectedConditions.elementToBeClickable( By.id("addCredentialButton") )).click();
+		waitDriver.until(ExpectedConditions.elementToBeClickable( By.id("credential-url") )).sendKeys(urlC);
+		waitDriver.until(ExpectedConditions.elementToBeClickable( By.id("credential-username") )).sendKeys(usernameC);
+		waitDriver.until(ExpectedConditions.elementToBeClickable( By.id("credential-password") )).sendKeys(passwordC);
+		waitDriver.until(ExpectedConditions.elementToBeClickable( By.id("saveCredentialChanges") )).click();
 
 		//check result page to home page flow
 		Assertions.assertEquals("http://localhost:" + port + "/credential", driver.getCurrentUrl());
-		Thread.sleep(1000);
-		wait.until(ExpectedConditions.elementToBeClickable( By.id("successResult-to-home-link") )).click();
+		Thread.sleep(2000);
+		waitDriver.until(ExpectedConditions.elementToBeClickable( By.id("successResult-to-home-link") )).click();
 		Thread.sleep(1000);
 		Assertions.assertEquals("http://localhost:" + port + "/home", driver.getCurrentUrl());
 
 		//check if the inputted note is consistent
 		driver.get("http://localhost:" + this.port + "/home");
-		wait.until(ExpectedConditions.elementToBeClickable(credentialTab)).click();
-		String displayedUrl = wait.until(ExpectedConditions.elementToBeClickable(By.id("homeCredentialUrl"))).getText();
-		String displayedUsername = wait.until(ExpectedConditions.elementToBeClickable(By.id("homeCredentialUsername"))).getText();
-		String displayedPassword = wait.until(ExpectedConditions.elementToBeClickable(By.id("homeCredentialPassword"))).getText();
+		waitDriver.until(ExpectedConditions.elementToBeClickable(credentialTab)).click();
+		String displayedUrl = waitDriver.until(ExpectedConditions.elementToBeClickable(By.id("homeCredentialUrl"))).getText();
+		String displayedUsername = waitDriver.until(ExpectedConditions.elementToBeClickable(By.id("homeCredentialUsername"))).getText();
+		String displayedPassword = waitDriver.until(ExpectedConditions.elementToBeClickable(By.id("homeCredentialPassword"))).getText();
 		Assertions.assertEquals(urlC, displayedUrl);
 		Assertions.assertEquals(usernameC, displayedUsername);
 		Assertions.assertNotEquals(usernameC, displayedPassword);
 
 		//edit existing credential
-		wait.until(ExpectedConditions.elementToBeClickable(By.id("editCredentialButton"))).click();
-		wait.until(ExpectedConditions.elementToBeClickable( By.id("credential-url") )).clear();
-		wait.until(ExpectedConditions.elementToBeClickable( By.id("credential-username") )).clear();
-		wait.until(ExpectedConditions.elementToBeClickable( By.id("credential-password") )).clear();
-		wait.until(ExpectedConditions.elementToBeClickable( By.id("credential-url") )).sendKeys(urlC);
-		wait.until(ExpectedConditions.elementToBeClickable( By.id("credential-username") )).sendKeys(usernameC);
-		wait.until(ExpectedConditions.elementToBeClickable( By.id("credential-password") )).sendKeys(passwordC);
-		wait.until(ExpectedConditions.elementToBeClickable(By.id("saveCredentialChanges"))).click();
+		waitDriver.until(ExpectedConditions.elementToBeClickable(By.id("editCredentialButton"))).click();
+		waitDriver.until(ExpectedConditions.elementToBeClickable( By.id("credential-url") )).clear();
+		waitDriver.until(ExpectedConditions.elementToBeClickable( By.id("credential-username") )).clear();
+		waitDriver.until(ExpectedConditions.elementToBeClickable( By.id("credential-password") )).clear();
+		waitDriver.until(ExpectedConditions.elementToBeClickable( By.id("credential-url") )).sendKeys(urlC);
+		waitDriver.until(ExpectedConditions.elementToBeClickable( By.id("credential-username") )).sendKeys(usernameC);
+		waitDriver.until(ExpectedConditions.elementToBeClickable( By.id("credential-password") )).sendKeys(passwordC);
+		waitDriver.until(ExpectedConditions.elementToBeClickable(By.id("saveCredentialChanges"))).click();
 
 		//check result page to home page flow
 		Assertions.assertEquals("http://localhost:" + port + "/credential", driver.getCurrentUrl());
-		Thread.sleep(1000);
-		wait.until(ExpectedConditions.elementToBeClickable( By.id("successResult-to-home-link") )).click();
+		Thread.sleep(2000);
+		waitDriver.until(ExpectedConditions.elementToBeClickable( By.id("successResult-to-home-link") )).click();
 		Thread.sleep(1000);
 		Assertions.assertEquals("http://localhost:" + port + "/home", driver.getCurrentUrl());
 
 		//delete credential
 		driver.get("http://localhost:" + this.port + "/home");
-		wait.until(ExpectedConditions.elementToBeClickable(credentialTab)).click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.id("deleteCredentialButton"))).click();
+		waitDriver.until(ExpectedConditions.elementToBeClickable(credentialTab)).click();
+		waitDriver.until(ExpectedConditions.elementToBeClickable(By.id("deleteCredentialButton"))).click();
 
 		//check result page to home page flow
-		Thread.sleep(1000);
-		wait.until(ExpectedConditions.elementToBeClickable( By.id("successResult-to-home-link") )).click();
+		Thread.sleep(2000);
+		waitDriver.until(ExpectedConditions.elementToBeClickable( By.id("successResult-to-home-link") )).click();
 		Thread.sleep(1000);
 		Assertions.assertEquals("http://localhost:" + port + "/home", driver.getCurrentUrl());
 
 		//check if credential is deleted
 		driver.get("http://localhost:" + this.port + "/home");
-		wait.until(ExpectedConditions.elementToBeClickable(credentialTab)).click();
+		waitDriver.until(ExpectedConditions.elementToBeClickable(credentialTab)).click();
 
 		Assertions.assertThrows(NoSuchElementException.class, () -> homePage.getHomeCredentialUrl().getText());
 		Assertions.assertThrows(NoSuchElementException.class, () -> homePage.getHomeCredentialUsername().getText());
