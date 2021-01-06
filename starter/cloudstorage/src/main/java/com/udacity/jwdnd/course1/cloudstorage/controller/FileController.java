@@ -29,14 +29,25 @@ public class FileController {
     @PostMapping()
     public String uploadFile (Model model, @RequestParam("fileUpload")MultipartFile file, Authentication authentication) {
         Integer userId = userService.getUserId(authentication.getName());
+        String fileName = file.getOriginalFilename();
         try{
-            if(!fileService.isDuplicate(file, userId)){
-                fileService.uploadFile(file, userId);
-                model.addAttribute("isSuccessful", true);
-                model.addAttribute("successMessage", file.getName() + " has been successfully uploaded!");
+            if(!fileName.isEmpty()) {
+                if (!fileService.isDuplicate(file, userId)) {
+                    if (file.getSize() < 10485760) {
+                        fileService.uploadFile(file, userId);
+                        model.addAttribute("isSuccessful", true);
+                        model.addAttribute("successMessage", fileName + " has been successfully uploaded!");
+                    } else {
+                        model.addAttribute("hasAnError", true);
+                        model.addAttribute("errorMessage", "File with " + fileName + " existed!");
+                    }
+                } else {
+                    model.addAttribute("hasAnError", true);
+                    model.addAttribute("errorMessage", "File size must be smaller than 10485760, current file size= " + file.getSize() + " is too larg!");
+                }
             } else {
                 model.addAttribute("hasAnError", true);
-                model.addAttribute("errorMessage", "File with " + file.getName() + " existed!");
+                model.addAttribute("errorMessage", "Uploading empty file is not possible");
             }
         } catch (IOException e){
             model.addAttribute("hasAnError", true);
@@ -57,7 +68,6 @@ public class FileController {
                 .body(file.getFileData());
     }
 
-//    @DeleteMapping("delete/{fileId}")
     @GetMapping("delete/{fileId}")
     public String deleteFile (Model model, @PathVariable Integer fileId, Authentication authentication){
         Integer userId = userService.getUserId(authentication.getName());
