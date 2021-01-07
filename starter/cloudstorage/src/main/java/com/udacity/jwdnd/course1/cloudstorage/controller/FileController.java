@@ -39,11 +39,11 @@ public class FileController {
                         model.addAttribute("successMessage", fileName + " has been successfully uploaded!");
                     } else {
                         model.addAttribute("hasAnError", true);
-                        model.addAttribute("errorMessage", "File with " + fileName + " existed!");
+                        model.addAttribute("errorMessage", "File size must be smaller than 10485760, current file size= (" + file.getSize() + ")");
                     }
                 } else {
                     model.addAttribute("hasAnError", true);
-                    model.addAttribute("errorMessage", "File size must be smaller than 10485760, current file size= " + file.getSize() + " is too larg!");
+                    model.addAttribute("errorMessage", "File with " + fileName + " existed!");
                 }
             } else {
                 model.addAttribute("hasAnError", true);

@@ -28,9 +28,6 @@ public class SignupPage {
     @FindBy(id = "submit-button")
     private WebElement submitButton;
 
-    @FindBy(id = "login-link")
-    private WebElement loginLink;
-
     public void createUser (String firstName, String lastName, String username, String password){
         //clear all textField
         this.firstName.clear();
@@ -44,6 +41,6 @@ public class SignupPage {
         this.username.sendKeys(username);
         this.password.sendKeys(password);
         this.submitButton.click();
-        this.loginLink.click();
+//        this.loginLink.click();
     }
 }

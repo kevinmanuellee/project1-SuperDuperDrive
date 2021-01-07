@@ -15,19 +15,19 @@ public class CloudStorageApplication {
 		SpringApplication.run(CloudStorageApplication.class, args);
 	}
 
-	@Bean
-	public MultipartResolver multipartResolver() {
-		CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
-		multipartResolver.setDefaultEncoding("utf-8");
-		multipartResolver.setMaxUploadSize(5242880);
-		return multipartResolver;
-	}
-
-	@Bean
-	public FilterRegistrationBean multipartFilterRegistrationBean() {
-		final MultipartFilter multipartFilter = new MultipartFilter();
-		final FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean(multipartFilter);
-		filterRegistrationBean.addInitParameter("multipartResolverBeanName", "multipartResolver");
-		return filterRegistrationBean;
-	}
+//	@Bean
+//	public MultipartResolver multipartResolver() {
+//		CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
+//		multipartResolver.setDefaultEncoding("utf-8");
+//		multipartResolver.setMaxUploadSize(5242880);
+//		return multipartResolver;
+//	}
+//
+//	@Bean
+//	public FilterRegistrationBean multipartFilterRegistrationBean() {
+//		final MultipartFilter multipartFilter = new MultipartFilter();
+//		final FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean(multipartFilter);
+//		filterRegistrationBean.addInitParameter("multipartResolverBeanName", "multipartResolver");
+//		return filterRegistrationBean;
+//	}
 }

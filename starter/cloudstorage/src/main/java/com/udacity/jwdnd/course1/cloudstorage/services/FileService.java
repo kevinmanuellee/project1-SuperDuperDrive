@@ -21,7 +21,7 @@ public class FileService {
     }
 
     public boolean isDuplicate (MultipartFile multipartFile, Integer userId){
-        return fileMapper.isExistingFile(multipartFile.getName(), userId);
+        return fileMapper.isExistingFile(multipartFile.getOriginalFilename(), userId);
     }
 
     public void uploadFile(MultipartFile multipartFile, Integer userId) throws IOException {

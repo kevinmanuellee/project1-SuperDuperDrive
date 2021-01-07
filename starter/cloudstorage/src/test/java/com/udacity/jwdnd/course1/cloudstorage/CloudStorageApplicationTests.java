@@ -31,12 +31,6 @@ class CloudStorageApplicationTests {
 
 	@BeforeEach
 	public void beforeEach() {
-		username = "kevin123";
-		password = "password321";
-		driver.get("http://localhost:" + this.port + "/signup");
-		SignupPage signupPage = new SignupPage(driver);
-		signupPage.createUser("kevin", "manuel", username, password);
-		driver.get("http://localhost:" + this.port + "/login");
 	}
 
 	@AfterAll
@@ -47,6 +41,7 @@ class CloudStorageApplicationTests {
 	}
 
 	@Test
+	@Order(1)
 	public void testAccessWithoutLogin(){
 		driver.get("http://localhost:" + this.port + "/signup");
 		Assertions.assertEquals("Sign Up", driver.getTitle());
@@ -57,7 +52,14 @@ class CloudStorageApplicationTests {
 	}
 
 	@Test
-	public void testAccessWithLogin(){
+	@Order(2)
+	public void testAccessWithLogin() {
+		username = "kevin123";
+		password = "password321";
+		driver.get("http://localhost:" + this.port + "/signup");
+		SignupPage signupPage = new SignupPage(driver);
+		signupPage.createUser("kevin", "manuel", username, password);
+
 		driver.get("http://localhost:" + this.port + "/login");
 		LoginPage loginPage = new LoginPage(driver);
 		Assertions.assertEquals("Login", driver.getTitle());
@@ -70,10 +72,14 @@ class CloudStorageApplicationTests {
 		homePage.logout();
 
 		Assertions.assertEquals("http://localhost:" + port + "/login?logout", driver.getCurrentUrl());
+
+		driver.get("http://localhost:" + this.port + "/home");
+		Assertions.assertNotEquals("Home", driver.getTitle());
 	}
 
 	@Test
-	public void testNote() throws InterruptedException {
+	@Order(3)
+	public void testCreateNote() throws InterruptedException {
 		String title = "title123";
 		String description = "description123";
 		String editedTitle = "title321";
@@ -114,6 +120,30 @@ class CloudStorageApplicationTests {
 		String displayedDescription = wait.until(ExpectedConditions.elementToBeClickable(By.id("homeNoteDescription"))).getText();
 		Assertions.assertEquals(title, displayedTitle);
 		Assertions.assertEquals(description, displayedDescription);
+	}
+
+	@Test
+	@Order(4)
+	public void testEditNote() throws InterruptedException {
+		String title = "title123";
+		String description = "description123";
+		String editedTitle = "title321";
+		String editedDescription = "description321";
+
+		driver.get("http://localhost:" + this.port + "/login");
+		LoginPage loginPage = new LoginPage(driver);
+		Assertions.assertEquals("Login", driver.getTitle());
+		loginPage.login(username,password);
+
+		//Wait Driver
+		WebDriverWait wait = new WebDriverWait(driver, 5);
+		driver.get("http://localhost:" + this.port + "/home");
+		HomePage homePage = new HomePage(driver);
+		Assertions.assertEquals("Home", driver.getTitle());
+
+		//open notes tab
+		WebElement noteTab = homePage.getNotesTab();
+		wait.until(ExpectedConditions.elementToBeClickable(noteTab)).click();
 
 		//edit existing note
 		wait.until(ExpectedConditions.elementToBeClickable(By.id("noteEditButton"))).click();
@@ -130,9 +160,41 @@ class CloudStorageApplicationTests {
 		Thread.sleep(1000);
 		Assertions.assertEquals("http://localhost:" + port + "/home", driver.getCurrentUrl());
 
-		//delete note
+		//check if the inputted note is consistent
 		driver.get("http://localhost:" + this.port + "/home");
 		wait.until(ExpectedConditions.elementToBeClickable(noteTab)).click();
+		String displayedTitle = wait.until(ExpectedConditions.elementToBeClickable(By.id("homeNoteTitle"))).getText();
+		String displayedDescription = wait.until(ExpectedConditions.elementToBeClickable(By.id("homeNoteDescription"))).getText();
+		Assertions.assertEquals(editedTitle, displayedTitle);
+		Assertions.assertEquals(editedDescription, displayedDescription);
+	}
+
+	@Test
+	@Order(5)
+	public void testDeleteNote() throws InterruptedException {
+		String title = "title123";
+		String description = "description123";
+		String editedTitle = "title321";
+		String editedDescription = "description321";
+
+		driver.get("http://localhost:" + this.port + "/login");
+		LoginPage loginPage = new LoginPage(driver);
+		Assertions.assertEquals("Login", driver.getTitle());
+		loginPage.login(username,password);
+
+		//Wait Driver
+		WebDriverWait wait = new WebDriverWait(driver, 5);
+		driver.get("http://localhost:" + this.port + "/home");
+		HomePage homePage = new HomePage(driver);
+		Assertions.assertEquals("Home", driver.getTitle());
+
+		//open notes tab
+		WebElement noteTab = homePage.getNotesTab();
+		wait.until(ExpectedConditions.elementToBeClickable(noteTab)).click();
+
+
+//		driver.get("http://localhost:" + this.port + "/home");
+		//delete note
 		wait.until(ExpectedConditions.elementToBeClickable(By.id("noteDeleteButton"))).click();
 
 		//check result page to home page flow
@@ -150,7 +212,8 @@ class CloudStorageApplicationTests {
 	}
 
 	@Test
-	public void testCredential() throws InterruptedException {
+	@Order(6)
+	public void testCreateCredential() throws InterruptedException {
 		String urlC = "test.com";
 		String usernameC = "userTest";
 		String passwordC = "passTest";
@@ -195,16 +258,42 @@ class CloudStorageApplicationTests {
 		String displayedPassword = waitDriver.until(ExpectedConditions.elementToBeClickable(By.id("homeCredentialPassword"))).getText();
 		Assertions.assertEquals(urlC, displayedUrl);
 		Assertions.assertEquals(usernameC, displayedUsername);
-		Assertions.assertNotEquals(usernameC, displayedPassword);
+		Assertions.assertNotEquals(passwordC, displayedPassword);
+	}
+
+	@Test
+	@Order(7)
+	public void testEditCredential() throws InterruptedException {
+		String urlC = "test.com";
+		String usernameC = "userTest";
+		String passwordC = "passTest";
+		String editedUrlC = "google.com";
+		String editedUsernameC = "userGoogle";
+		String editedPasswordC = "passGoogle";
+
+		driver.get("http://localhost:" + this.port + "/login");
+		LoginPage loginPage = new LoginPage(driver);
+		Assertions.assertEquals("Login", driver.getTitle());
+		loginPage.login(username,password);
+
+		//Wait Driver
+		WebDriverWait waitDriver = new WebDriverWait(driver, 5);
+		driver.get("http://localhost:" + this.port + "/home");
+		HomePage homePage = new HomePage(driver);
+		Assertions.assertEquals("Home", driver.getTitle());
+
+		//open credential tab
+		WebElement credentialTab = homePage.getCredentialsTab();
+		waitDriver.until(ExpectedConditions.elementToBeClickable(credentialTab)).click();
 
 		//edit existing credential
 		waitDriver.until(ExpectedConditions.elementToBeClickable(By.id("editCredentialButton"))).click();
 		waitDriver.until(ExpectedConditions.elementToBeClickable( By.id("credential-url") )).clear();
 		waitDriver.until(ExpectedConditions.elementToBeClickable( By.id("credential-username") )).clear();
 		waitDriver.until(ExpectedConditions.elementToBeClickable( By.id("credential-password") )).clear();
-		waitDriver.until(ExpectedConditions.elementToBeClickable( By.id("credential-url") )).sendKeys(urlC);
-		waitDriver.until(ExpectedConditions.elementToBeClickable( By.id("credential-username") )).sendKeys(usernameC);
-		waitDriver.until(ExpectedConditions.elementToBeClickable( By.id("credential-password") )).sendKeys(passwordC);
+		waitDriver.until(ExpectedConditions.elementToBeClickable( By.id("credential-url") )).sendKeys(editedUrlC);
+		waitDriver.until(ExpectedConditions.elementToBeClickable( By.id("credential-username") )).sendKeys(editedUsernameC);
+		waitDriver.until(ExpectedConditions.elementToBeClickable( By.id("credential-password") )).sendKeys(editedPasswordC);
 		waitDriver.until(ExpectedConditions.elementToBeClickable(By.id("saveCredentialChanges"))).click();
 
 		//check result page to home page flow
@@ -213,6 +302,42 @@ class CloudStorageApplicationTests {
 		waitDriver.until(ExpectedConditions.elementToBeClickable( By.id("successResult-to-home-link") )).click();
 		Thread.sleep(1000);
 		Assertions.assertEquals("http://localhost:" + port + "/home", driver.getCurrentUrl());
+
+		//check if the inputted note is consistent
+		driver.get("http://localhost:" + this.port + "/home");
+		waitDriver.until(ExpectedConditions.elementToBeClickable(credentialTab)).click();
+		String displayedUrl = waitDriver.until(ExpectedConditions.elementToBeClickable(By.id("homeCredentialUrl"))).getText();
+		String displayedUsername = waitDriver.until(ExpectedConditions.elementToBeClickable(By.id("homeCredentialUsername"))).getText();
+		String displayedPassword = waitDriver.until(ExpectedConditions.elementToBeClickable(By.id("homeCredentialPassword"))).getText();
+		Assertions.assertEquals(editedUrlC, displayedUrl);
+		Assertions.assertEquals(editedUsernameC, displayedUsername);
+		Assertions.assertNotEquals(editedPasswordC, displayedPassword);
+	}
+
+	@Test
+	@Order(8)
+	public void testDeleteCredential() throws InterruptedException {
+		String urlC = "test.com";
+		String usernameC = "userTest";
+		String passwordC = "passTest";
+		String editedUrlC = "google.com";
+		String editedUsernameC = "userGoogle";
+		String editedPasswordC = "passGoogle";
+
+		driver.get("http://localhost:" + this.port + "/login");
+		LoginPage loginPage = new LoginPage(driver);
+		Assertions.assertEquals("Login", driver.getTitle());
+		loginPage.login(username,password);
+
+		//Wait Driver
+		WebDriverWait waitDriver = new WebDriverWait(driver, 5);
+		driver.get("http://localhost:" + this.port + "/home");
+		HomePage homePage = new HomePage(driver);
+		Assertions.assertEquals("Home", driver.getTitle());
+
+		//open credential tab
+		WebElement credentialTab = homePage.getCredentialsTab();
+		waitDriver.until(ExpectedConditions.elementToBeClickable(credentialTab)).click();
 
 		//delete credential
 		driver.get("http://localhost:" + this.port + "/home");
@@ -232,6 +357,5 @@ class CloudStorageApplicationTests {
 		Assertions.assertThrows(NoSuchElementException.class, () -> homePage.getHomeCredentialUrl().getText());
 		Assertions.assertThrows(NoSuchElementException.class, () -> homePage.getHomeCredentialUsername().getText());
 		Assertions.assertThrows(NoSuchElementException.class, () -> homePage.getHomeCredentialPassword().getText());
-
 	}
 }
