@@ -41,6 +41,5 @@ public class SignupPage {
         this.username.sendKeys(username);
         this.password.sendKeys(password);
         this.submitButton.click();
-//        this.loginLink.click();
     }
 }
