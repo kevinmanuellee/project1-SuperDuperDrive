@@ -22,6 +22,12 @@ Your tech lead is excited to work with you and has laid out a development roadma
 1. The back-end with Spring Boot
 2. The front-end with Thymeleaf
 3. Application tests with Selenium
+4. Database with MySQL
+5. Store BLOB file in S3
+6. Deploy to AWS
+
+### The Database
+Use AWS RDS MySQL Database, and store BLOB file in AWS S3 instead of MySQL
 
 ### The Back-End
 The back-end is all about security and connecting the front-end to database data and actions. 
