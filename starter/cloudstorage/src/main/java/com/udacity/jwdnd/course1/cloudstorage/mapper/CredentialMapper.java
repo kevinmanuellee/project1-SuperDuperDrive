@@ -6,11 +6,11 @@ import java.util.List;
 
 @Mapper
 public interface CredentialMapper {
-    @Insert("INSERT INTO CREDENTIALS (url,username,key,password,userId) VALUES(#{url},#{username},#{key},#{password},#{userId});")
+    @Insert("INSERT INTO CREDENTIALS (url,username,keyz,password,userId) VALUES(#{url},#{username},#{keyz},#{password},#{userId});")
     @Options(useGeneratedKeys=true, keyProperty = "credentialId")
     Integer insertCredential(Credential credential);
 
-    @Update("UPDATE CREDENTIALS SET url=#{url},username=#{username}, key=#{key}, password=#{password} where credentialId=#{credentialId};")
+    @Update("UPDATE CREDENTIALS SET url=#{url},username=#{username}, keyz=#{keyz}, password=#{password} where credentialId=#{credentialId};")
     Integer updateCredential(Credential credential);
 
     @Delete("DELETE FROM CREDENTIALS where credentialId=#{credentialId};")

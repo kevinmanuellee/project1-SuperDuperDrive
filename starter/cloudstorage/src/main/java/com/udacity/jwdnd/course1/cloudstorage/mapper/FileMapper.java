@@ -6,8 +6,8 @@ import java.util.List;
 
 @Mapper
 public interface FileMapper {
-    @Insert("INSERT INTO FILES (fileId,fileName,contentType,fileSize,userId,fileData) " +
-            "VALUES (#{fileId},#{fileName},#{contentType},#{fileSize},#{userId},#{fileData});")
+    @Insert("INSERT INTO FILES (fileId,fileName,path,userId) " +
+            "VALUES (#{fileId},#{fileName},#{path},#{userId});")
     @Options(useGeneratedKeys = true, keyProperty = "fileId")
     int uploadFile(File file);
 
@@ -18,7 +18,7 @@ public interface FileMapper {
     File getFile(Integer fileId, Integer userId);
 
     @Select("SELECT CASE WHEN EXISTS (" +
-                "SELECT * FROM FILES WHERE fileName=#{fileName} AND userId=#{userId}" +
+            "SELECT * FROM FILES WHERE fileName=#{fileName} AND userId=#{userId}" +
             ") " +
             "THEN TRUE " +
             "ELSE FALSE END AS bool;")
